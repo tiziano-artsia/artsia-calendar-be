@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  HR
+  USER
+}
+
+enum RequestType {
+  VACATION      // Ferie
+  PERMISSION    // Permesso
+  REMOTE_WORK   // Smart working
+  SICK_LEAVE    // Malattia
+}
+
+
+enum RequestStatus {
+  PENDING   // In attesa di approvazione
+  APPROVED  // Approvata
+  REJECTED  // Rifiutata
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  requests  Request[]
+}
+
+model Request {
+  id        String         @id @default(uuid())
+  type      RequestType
+  status    RequestStatus  @default(PENDING)
+  userId    String
+  user      User           @relation(fields: [userId], references: [id])
+  createdAt DateTime       @default(now())
+}
