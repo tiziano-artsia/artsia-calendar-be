@@ -14,12 +14,11 @@ enum Role {
 }
 
 enum RequestType {
-  VACATION      // Ferie
-  PERMISSION    // Permesso
-  REMOTE_WORK   // Smart working
-  SICK_LEAVE    // Malattia
+  FERIE      // Ferie
+  PERMESSO    // Permesso
+  SMART_WORK   // Smart working
+  MALATTIA    // Malattia
 }
-
 
 enum RequestStatus {
   PENDING   // In attesa di approvazione
@@ -37,10 +36,13 @@ model User {
 }
 
 model Request {
-  id        String         @id @default(uuid())
-  type      RequestType
-  status    RequestStatus  @default(PENDING)
-  userId    String
-  user      User           @relation(fields: [userId], references: [id])
-  createdAt DateTime       @default(now())
+  id          String         @id @default(uuid())
+  type        RequestType
+  status      RequestStatus  @default(PENDING)
+  userId      String
+  user        User           @relation(fields: [userId], references: [id])
+  createdAt   DateTime       @default(now())
+  startDate   DateTime?      // Starting date of the request (e.g., vacation or sick leave start date)
+  endDate     DateTime?      // End date of the request (e.g., vacation or sick leave end date)
+  hours       Int?           // Hours for "Permesso" (Permission) request (0-4)
 }

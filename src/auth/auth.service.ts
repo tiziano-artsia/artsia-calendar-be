@@ -18,12 +18,19 @@ export class AuthService {
 
   // Funzione di login
   async login(email: string, password: string) {
-    const user = await this.prisma.user.findUnique({ where: { email } });
 
-   // console.log('Utente trovato nel database:', user); // 🔍 Debug
+    if (!email) {
+      throw new Error("L'email non può essere vuota!");
+    }
 
-    if (!user || !(await bcrypt.compare(password, user.password))) {
-      throw new UnauthorizedException('Invalid credentials');
+    const user = await this.prisma.user.findUnique({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      throw new Error("Utente non trovato!");
     }
 
     return this.generateToken(user);
