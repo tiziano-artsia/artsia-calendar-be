@@ -20,7 +20,7 @@ export class AuthService {
   async login(email: string, password: string) {
     const user = await this.prisma.user.findUnique({ where: { email } });
 
-    console.log('Utente trovato nel database:', user); // 🔍 Debug
+   // console.log('Utente trovato nel database:', user); // 🔍 Debug
 
     if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new UnauthorizedException('Invalid credentials');
@@ -39,7 +39,7 @@ export class AuthService {
       role: user.role,
     };
 
-    console.log('Payload prima di firmare il token:', payload); // 🔍 Debug
+    //console.log('Payload prima di firmare il token:', payload); // 🔍 Debug
 
     return { access_token: this.jwtService.sign(payload) };
   }
