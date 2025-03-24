@@ -14,8 +14,8 @@ import { Controller, Get, Post, Put, Body, Param, UseGuards, Request, ForbiddenE
       async createRequest(
         @Request() req,
         @Body('type') type: RequestType,
-        @Body('startDate') startDate: Date,
-        @Body('endDate') endDate: Date,
+        @Body('startDate') startDate: string,
+        @Body('endDate') endDate: string,
         @Body('hours') hours: number
       ) {
         console.log('Dati utente:', req.user); // 🔍 Debug
