@@ -16,7 +16,7 @@ enum Role {
 enum RequestType {
   FERIE      // Ferie
   PERMESSO    // Permesso
-  SMART_WORK   // Smart working
+  SMART_WORKING  // Smart working
   MALATTIA    // Malattia
 }
 
